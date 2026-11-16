@@ -1,0 +1,7 @@
+# Upstream Beret, fetched by package/build-amiga.sh at this commit.
+# Nigel Kilmer's game (2011), LGPL-3.0; the git history kept by Jacob
+# Adams, as Debian packages it.
+BERET_URL=https://github.com/Tookmund/beret
+BERET_COMMIT=4e2f21bf4eeabfd137b2b846756a368b42456675
+BERET_VERSION=1.2.1
+PORT_VERSION=1.2.1-gfos1
