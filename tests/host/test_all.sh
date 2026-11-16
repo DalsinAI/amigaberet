@@ -34,4 +34,5 @@ if pkg-config --exists sdl2 SDL2_image SDL2_ttf SDL2_mixer; then
 else
     echo "play: SKIP (no SDL 2 development files on this host)"
 fi
+python3 -I "$HERE/test_lha.py"
 echo PASS
