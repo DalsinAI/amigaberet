@@ -1,0 +1,20 @@
+Beret: the keys
+===============
+
+  Cursor keys, or W A S D     walk, jump (up), duck (down)
+  Space                       jump
+  Shift                       walk slowly
+  Left mouse button (hold)    telekinesis: pick up and move things
+  Right mouse button, or G    the telekinesis range guide
+  P                           pause
+  M                           the camera follows the mouse, or not
+  I J K L                     look around the room
+  R                           start the room again
+  F1 or 1                     save the room's state; F4 or 4 loads it
+  Esc                         the menu, and back to the map
+  /                           music on or off
+  Alt + Return                a screen of its own, or the window
+
+In the game select: Return starts the game picked with the cursor keys.
+Options, saves and the rooms you make in the editor are kept in the
+drawer's User drawer.

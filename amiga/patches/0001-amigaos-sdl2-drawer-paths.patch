@@ -1,0 +1,61 @@
+diff --git a/game.c b/game.c
+index beae217..1973123 100644
+--- a/game.c
++++ b/game.c
+@@ -14,8 +14,13 @@
+ #include <sys/stat.h>
+ #include <unistd.h>
+ #include <errno.h>
++#ifndef __amigaos__
+ #include <pwd.h>
+ #endif
++#endif
++#ifdef __amigaos__
++#include "beret_amiga.h"
++#endif
+ 
+ #define CAMSCROLL 15
+ #define SCR_WIDTH 780
+@@ -829,6 +834,12 @@ int init() {
+ 
+   #ifdef __WIN32__
+   sprintf(support_path, "");
++  #elif defined(__amigaos__)
++  // The player's files live in the game's own drawer.
++  sprintf(support_path, "%s", BERET_USER_PATH);
++  mkdir(BERET_USER_DIR, S_IRWXU);
++  mkdir(BERET_USER_PATH "rooms", S_IRWXU);
++  mkdir(BERET_USER_PATH "saves", S_IRWXU);
+   #else
+   char filestr[512];
+   // Get the home directory of the user.
+@@ -856,8 +867,14 @@ int init() {
+   SDL_Surface* icon = SDL_LoadBMP(RESOURCE_PATH "images" DIRSEP "block.bmp");
+   SDL_WM_SetIcon(icon, NULL);
+ 
++#ifdef __amigaos__
++  // A window on the Workbench screen; Alt+Return still asks for a screen of its own.
++  screen = SDL_SetVideoMode(SCR_WIDTH, SCR_HEIGHT, SCR_BPP, SDL_SWSURFACE);
++  fullscreenmode = 0;
++#else
+   screen = SDL_SetVideoMode(SCR_WIDTH, SCR_HEIGHT, SCR_BPP, SDL_FULLSCREEN);
+   fullscreenmode = 1;
++#endif
+   if (screen == NULL) {
+     printf("Error: couldn't initialize the screen\n");
+     return 0;
+@@ -4108,8 +4125,14 @@ int main(int argc, char* argv[]) {
+           creatormode = 0;
+           clean_up();
+           return 0;
++#ifdef __amigaos__
++        } else if (event.type == SDL_WINDOWEVENT) {
++          if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) inactive = 1;
++          else if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) inactive = 0;
++#else
+         } else if (event.type == SDL_ACTIVEEVENT) {
+             inactive = !event.active.gain;
++#endif
+         } else if (event.type == SDL_KEYDOWN) {
+           handle_key_down(event.key.keysym.sym);
+         } else if (event.type == SDL_KEYUP) {
